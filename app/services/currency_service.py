@@ -10,6 +10,7 @@ from app.core.security import hash_password, verify_password, create_jwt_token
 from app.api.schemas import user
 from app.core.config import settings
 from app.api.schemas.currency import ExchangerRequest, ExchangerResponse, CurrencyListItem
+from app.api.endpoints.errors.models import CurrencyExchangeError
 from abc import ABC, abstractmethod
 import aiohttp
 
@@ -76,6 +77,8 @@ class APILayerCurrencyService(CurrencyService):
         }
         async with session.get(url, params=params, headers=self._get_session_headers()) as result:
             body = await result.json()
+            if not body.get('success'):
+                raise CurrencyExchangeError(body.get('error'))
             response = ExchangerResponse(**body)
             return response
 
