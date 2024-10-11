@@ -76,7 +76,7 @@ class APILayerCurrencyService(CurrencyService):
         }
         async with session.get(url, params=params, headers=self._get_session_headers()) as result:
             body = await result.json()
-            response =  ExchangerResponse(**body)
+            response = ExchangerResponse(**body)
             return response
 
 

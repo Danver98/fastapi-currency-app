@@ -3,9 +3,9 @@ from datetime import datetime, timezone
 
 class ExchangerRequest(BaseModel):
     from_: str = Field(..., alias='from')
-    to: list[str]
+    to: list[str] | str
     amount: int = 1
-    date: datetime = datetime.now(timezone.utc)
+    date: str = datetime.now(timezone.utc).strftime('%Y-%m-%d')
 
 
 class CurrencyListItem(BaseModel):
