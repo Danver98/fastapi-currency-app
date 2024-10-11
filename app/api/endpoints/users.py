@@ -1,12 +1,27 @@
 from typing import Annotated
 from datetime import datetime, timezone
-from fastapi import APIRouter, Depends, Form, Response, Request
+from fastapi import APIRouter, Depends, Form, Response, Request, status
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_async_session
 from app.api.schemas.user import UserRegister, UserLogin, User
 from app.services.auth_service import AuthService
 from app.core.security import get_current_user
+
+
+class UserRegistrationError(Exception):
+    def __init__(self, msg):
+        self.message = msg
+
+
+async def user_registration_error_handler(request: Request, ex: UserRegistrationError) -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={
+            'message': ex.message
+        }
+    )
 
 
 auth_router = APIRouter(
