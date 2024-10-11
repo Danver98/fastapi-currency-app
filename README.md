@@ -40,3 +40,7 @@ List of env-variables:
 - DB_NAME
 - JWT_SECRET_KEY - a secret key to cypher jwt token data
 - USER_PASSWORD_SALT - special key to append to raw user password before hashing
+
+## TODO
+- forbid repeatative login
+- Implement proper token refreshing
