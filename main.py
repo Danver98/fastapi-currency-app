@@ -21,8 +21,9 @@ async def lifespan(app: FastAPI):
     if not client_session.closed:
         await client_session.__aexit__(None, None, None)
 
-#app = FastAPI(lifespan=lifespan)
-app = FastAPI()
+
+app = FastAPI(lifespan=lifespan)
+#app = FastAPI()
 
 app.add_exception_handler(UserRegistrationError, handler=user_registration_error_handler)
 
