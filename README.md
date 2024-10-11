@@ -1,4 +1,6 @@
 # Stepik FastAPI course first final task
+FastAPI Uvicorn app.
+
 Implemented features:
 * user registration and authentication via JWT;
 * getting info about currencies
@@ -21,6 +23,9 @@ API is based on currency service https://apilayer.com/.
     * amount
     * date
 Params and response are based on https://apilayer.com/ API
+
+## Database
+[Alembic](https://alembic.sqlalchemy.org/en/latest/#) was used in project. You'd generate versions and migrations yourself
 
 ## Info
 You'd add  your own `.env` file to the root of the project  with corresponding secret variables or yo can get them from environmental variables in OS.
