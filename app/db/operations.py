@@ -1,5 +1,6 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
 from asyncpg.exceptions import UniqueViolationError
 from app.api.endpoints.users import UserRegister
 from app.db import models
@@ -13,7 +14,7 @@ async def create_user(session: AsyncSession, user: UserRegister) -> models.User:
     try:
         await session.commit()
         await session.refresh(db_user)
-    except UniqueViolationError as ex:
+    except (UniqueViolationError, IntegrityError) as ex:
         raise UserRegistrationError(str(ex)) from ex
     return db_user
 

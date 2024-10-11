@@ -22,7 +22,7 @@ def get_auth_service(session: AsyncSession = Depends(get_async_session)) -> Auth
 
 @auth_router.post('/register')
 async def register_user(request: Request,
-                        auth_service: AuthService = Depends(get_auth_service)):
+                        auth_service: AuthService = Depends(get_auth_service)) -> User:
     form_data = await request.form()
     registered_user = UserRegister(**form_data)
     return await auth_service.register(registered_user)
