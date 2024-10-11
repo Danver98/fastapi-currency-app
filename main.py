@@ -4,8 +4,10 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
 from contextlib import asynccontextmanager
-from app.api.endpoints.users import auth_router, UserRegistrationError, user_registration_error_handler
+from app.api.endpoints.users import auth_router
 from app.api.endpoints.currency import currency_router
+from app.api.endpoints.errors.handlers import user_registration_error_handler
+from app.api.endpoints.errors.models import UserRegistrationError
 
 
 @asynccontextmanager
