@@ -64,7 +64,7 @@ class APILayerCurrencyService(CurrencyService):
         url = self.BASE_URL + '/list'
         async with session.get(url, headers=self._get_session_headers()) as result:
             body = await result.json()
-            return body
+            return CurrencyListItem(**body)
 
     async def exchange(self, session: aiohttp.ClientSession, exchanger: ExchangerRequest) -> ExchangerResponse:
         url = self.BASE_URL + '/convert'

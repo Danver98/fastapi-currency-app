@@ -1,19 +1,16 @@
 from typing import Annotated
-from datetime import datetime, timezone
 import aiohttp
-from fastapi import APIRouter, Depends, Form, Response, Request
-from fastapi.security import OAuth2PasswordRequestForm
-from app.api.schemas.user import UserRegister, UserLogin, User
+from fastapi import APIRouter, Depends, Request
 from app.services.currency_service import CurrencyService, APILayerCurrencyService, CurrencyListItem
 from app.api.schemas.currency import ExchangerRequest, ExchangerResponse
 from app.core.security import get_current_user
 
 
 async def get_currency_service() -> CurrencyService:
-    return await APILayerCurrencyService()
+    return APILayerCurrencyService()
 
 async def get_session(request: Request) -> aiohttp.ClientSession:
-    return request.app.get('aiohttp_session')
+    return request.app.aiohttp_client_session
 
 
 currency_router = APIRouter(

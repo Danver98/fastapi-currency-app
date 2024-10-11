@@ -40,7 +40,7 @@ async def login_user(data: Annotated[OAuth2PasswordRequestForm, Depends()],
     }
 
 
-@auth_router.get('/logout')
+@auth_router.post('/logout')
 async def logout_user(current_user: Annotated[User, Depends(get_current_user)],
     auth_service: AuthService = Depends(get_auth_service)) -> dict:
     await auth_service.logout(current_user.login)

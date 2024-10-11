@@ -28,8 +28,8 @@ class AuthService():
         db_user = await operations.get_user_by_login(self._session, data.username)
         if db_user is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User not found")
-        if db_user.logged:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User's already been authenticated")
+        # if db_user.logged:
+        #     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User's already been authenticated")
         if not verify_password(data.password, db_user.password):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong Password")
         token_data = {

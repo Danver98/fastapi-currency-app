@@ -9,8 +9,8 @@ class ExchangerRequest(BaseModel):
 
 
 class CurrencyListItem(BaseModel):
-    status: bool
-    symbols: dict[str, str] = None
+    success: bool
+    currencies: dict[str, str] = None
 
 
 class Info(BaseModel):

@@ -12,7 +12,7 @@ from .config import settings
 from app.api.schemas import user
 
 ALGORITHM = "HS256" # плюс в реальной жизни мы устанавливаем "время жизни" токена
-EXPIRATION_TIME = timedelta(minutes=15)
+EXPIRATION_TIME = timedelta(minutes=30)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
