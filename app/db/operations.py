@@ -6,7 +6,6 @@ from app.db import models
 
 async def create_user(session: AsyncSession, user: UserRegister) -> models.User:
     db_user = models.User(**user.model_dump())
-    db_user.logged = True
     session.add(db_user)
     await session.commit()
     await session.refresh(db_user)
@@ -19,6 +18,17 @@ async def get_user(session: AsyncSession, id_: int) -> models.User:
 async def get_user_by_login(session: AsyncSession, login: str) -> models.User:
     result = await session.execute(select(models.User).where(models.User.login == login).limit(1))
     return result.scalar_one()
+
+async def login_user(session: AsyncSession, login: str) -> models.User:
+    statement = update(models.User).where(models.User.login == login).values(
+        {
+            'logged': True
+        }
+    )
+    await session.execute(statement)
+    await session.commit()
+    return
+
 
 async def logout_user(session: AsyncSession, login: str) -> models.User:
     statement = update(models.User).where(models.User.login == login).values(

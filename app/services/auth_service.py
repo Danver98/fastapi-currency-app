@@ -27,6 +27,7 @@ class AuthService():
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User nt found")
         if not verify_password(data.password, db_user.password):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong Password")
+        await operations.login_user(self._session, db_user.login)
         token_data = {
             'sub': db_user.login,
             'name': db_user.name,

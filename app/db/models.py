@@ -16,5 +16,5 @@ class User(Base):  # обязательно наследуем все модел
     name: Mapped[str]  = mapped_column(String, nullable=True)
     surname: Mapped[str] = mapped_column(String, nullable=True)
     password: Mapped[str] = mapped_column(String, nullable=True)
-    roles: Mapped[tuple[Role]] = mapped_column(ARRAY(SmallInteger), as_tuple=True)
+    roles: Mapped[tuple[Role]] = mapped_column(ARRAY(SmallInteger), nullable=True)
     logged: Mapped[bool] = mapped_column(Boolean, nullable=True, default=False)
