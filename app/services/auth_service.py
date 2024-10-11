@@ -27,16 +27,20 @@ class AuthService():
         """Login user method"""
         db_user = await operations.get_user_by_login(self._session, data.username)
         if db_user is None:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User nt found")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User not found")
+        if db_user.logged:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User's already been authenticated")
         if not verify_password(data.password, db_user.password):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong Password")
-        await operations.login_user(self._session, db_user.login)
         token_data = {
             'sub': db_user.login,
             'name': db_user.name,
             'surname': db_user.surname,
             'roles': db_user.roles
         }
+        # login_user will commit changes what'll cause session's objects expiration and their attributes'll be loaded from db
+        # again at next invokation to them. Can be circumvented by using Session.expire_on_commit=False
+        await operations.login_user(self._session, db_user.login)
         return create_jwt_token(token_data)
 
     async def logout(self, login: str):
